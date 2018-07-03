@@ -1,0 +1,113 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.app__container {
+  width: 900px;
+}
+.app__title {
+  font-size: 20px;
+}
+.form__container {
+  background: #e8e8e8;
+  outline: none;
+  position: relative;
+}
+.form__container input {
+  border: none;
+  border-radius: 5px;
+  padding: 6px;
+  text-align: center;
+  display: inline;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  outline: none;
+}
+.form__container button {
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 6px;
+  margin-top: 5px;
+  background: #6bb4ff;
+  margin-left: 10px;
+}
+.contacts__container {
+  margin: 0 auto;
+  background: #e8e8e8;
+  height: 500px;
+  text-align: center;
+  display: flex;
+  width: 900px;
+}
+.test {
+  background: white;
+  margin: 10px;
+  padding: 10px;
+  word-spacing: 40px;
+  border-radius: 10px;
+}
+/* hide input arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.contacts__column {
+  width: 250px;
+  height: 400px;
+  background: white;
+  margin-top: 50px;
+}
+.contacts__column ul {
+  list-style: none;
+  text-align: center;
+  margin-left: -40px;
+}
+.contacts__column li {
+  margin: 10px;
+}
+.testClass {
+  color: red;
+}
+.contacts__column p {
+  border-bottom: 1px solid grey;
+  margin-top: -5px;
+  padding: 10px;
+  font-weight: bold;
+}
+.contacts__column--first {
+  border-right: 1px solid grey;
+  margin-left: 20px;
+}
+.contacts__column--last {
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+}
+.contacts__column--actions {
+  margin-right: 20px;
+  width: 100px;
+}
+.contacts__column--actions button {
+  width: 60px;
+  height: auto;
+  border: none;
+  border-radius: 5px;
+  background: #ef5b5b;
+  color: white;
+  outline: none;
+  padding: 0px;
+}
+.contacts__column--actions button:hover {
+  background: #f23232;
+}
