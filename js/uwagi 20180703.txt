@@ -1,0 +1,47 @@
+1. Przechowywanie listy rekordów w odpowiedniej strukturze danych zamiast w kodzie HMTL.
+	Teraz, gdy ktoś doda rekord, tworzysz nowe elementy <li>. 
+	Minusy takiego podejścia:
+	 - jak dojdzie wyszukiwanie w ksiazce telefonicznej, bedziesz musial iterowac po elementach HTML
+	 - co jak ktos za chwile bedzie chcial zmodywfikowac wyglad strony i zamiast <li> bedzie chcial zrobic <ul> lub <span>? Wtedy bedziesz musial zmienic caly kod dodawania/usuwania/wyszukiwania
+	
+	Dlatego chcemy trzymac model(dane) osobno niz widok(view).
+	
+	Do zmiany:
+	- zrob funkcje ktora zczytuje dane wprowadzone do formularza
+	- funkcja ta tworzy rekord/obiekt (var rekord={'name':'john', 'phone':'+123435456\}) i dodaje go to tablicy (nazwijmy ją Bazą Danych) lub innej struktury danych
+	- kolejna funkcja odswieza liste rekordow na podstawie tablicy (Bazy Danych)
+	
+	
+	
+	Hint:
+		przeczytaj o MVC (Model, View, Controller)
+		o obiektach (key - value) : https://javascript.info/object#literals-and-properties
+		przeczytaj o tablicach: https://javascript.info/array 
+		i alternatywnych strukturach danych: https://javascript.info/map-set-weakmap-weakset
+		
+
+		
+2. Funkcje i parametry
+	-uzywaj parametrów w wywołaniach funkcji
+	
+	
+Ten kod:
+
+function addNewContact() {
+  addPhoneNumber();
+  addName();
+  addLastName();
+  addActions();
+}
+
+Przerobiłbym na:
+
+
+var database = .... tutaj inicjalizacja bazy (tymczasowo - potem to zmienimy na JSON)
+
+function onFormSubmit() {
+	
+	var record = collectPhoneBookRecord();
+	storeRecordInTheDatabase(record);
+	refreshListOfRecords(database)
+}

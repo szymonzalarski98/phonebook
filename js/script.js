@@ -67,10 +67,20 @@ function addActions() {
   var actionsLi = document.createElement('li');
   var actionsButton = document.createElement('button');
   actionsButton.textContent = "Delete";
+  actionsButton.onclick = function () {
+    deleteRow();
+  }
   actionsLi.appendChild(actionsButton);
   actionsCol.appendChild(actionsLi);
 }
 
 function deleteRow() {
-
+  var phoneChilds = document.querySelector('#phoneCol');
+  var nameChilds = document.querySelector('#nameCol');
+  var lastNameChilds = document.querySelector('#lastNameCol');
+  var actionsChilds = document.querySelector('#actionsCol');
+  phoneChilds.removeChild(phoneChilds.lastChild);
+  nameChilds.removeChild(nameChilds.lastChild);
+  lastNameChilds.removeChild(lastNameChilds.lastChild);
+  actionsChilds.removeChild(actionsChilds.lastChild);
 }
