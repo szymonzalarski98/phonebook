@@ -102,6 +102,7 @@ input::-webkit-inner-spin-button {
 } */
 .contacts__column {
   list-style: none;
+  width: 600px;
 }
 .contacts__column li {
   margin: 10px;
