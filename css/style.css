@@ -50,20 +50,12 @@ body {
   display: flex;
   width: 900px;
 }
-.test {
-  background: white;
-  margin: 10px;
-  padding: 10px;
-  word-spacing: 40px;
-  border-radius: 10px;
-}
-/* hide input arrows */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-.contacts__column {
+/* .contacts__column {
   width: 250px;
   height: 400px;
   background: white;
@@ -76,9 +68,6 @@ input::-webkit-inner-spin-button {
 }
 .contacts__column li {
   margin: 10px;
-}
-.testClass {
-  color: red;
 }
 .contacts__column p {
   border-bottom: 1px solid grey;
@@ -110,4 +99,33 @@ input::-webkit-inner-spin-button {
 }
 .contacts__column--actions button:hover {
   background: #f23232;
+} */
+.contacts__column {
+  list-style: none;
+}
+.contacts__column li {
+  margin: 10px;
+  text-align: center;
+}
+.contacts__button--edit {
+  background: #80ed80;
+  outline: none;
+  width: 50px;
+  height: auto;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 0;
+  color: white;
+}
+.contacts__button--delete {
+  background: #e85f5f;
+  outline: none;
+  width: 50px;
+  height: auto;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 0;
+  color: white;
 }

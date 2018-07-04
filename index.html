@@ -11,7 +11,7 @@
       <div class="app__container">
         <p class="app__title">Phone book</p>
         <div class="form__container">
-          <form onsubmit="addNewContact()" action="#">
+          <form onsubmit="onFormSubmit()" action="#">
             <input placeholder="Phone number" type="number" id="phoneNumber" />
             <input placeholder="Name" id="name" />
             <input placeholder="Last name" id="lastName" />
@@ -19,7 +19,9 @@
           </form>
         </div>
         <div class="contacts__container">
-          <div class="contacts__column contacts__column--first">
+          <ul class="contacts__column">
+          </ul>
+          <!-- <div class="contacts__column contacts__column--first">
             <p>Phone number</p>
             <ul id="phoneCol">
             </ul>
@@ -38,7 +40,7 @@
             <p>Actions</p>
             <ul id="actionsCol">
             </ul>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
