@@ -1,0 +1,50 @@
+1. Dodaj przy każdym rekordzie buttony:
+	a) Edit 
+		-kliknięcie "Edit" ładuje dany rekord do formularza i pozwala na edycję; 
+		-w momencie załadowania rekordu do formularza, button "Add new contact" zamienia się na "Save contact"
+		-wciśnięcie "Save contact" powoduje aktualizację rekordu w bazie (ale nie dodanie nowego!) i odświeżenie listy		
+	b) Delete 
+		-kliknięcie "Delete" usuwa rekord, odświeża listę
+	
+	
+2) Dodaj funkcje do obsługi bazy danych	
+	-pushToArray już jest (dodaje rekord do bazy). Zmieniłbym nazwę funkcji na saveRecordToDatabase(). Ta funkcja powinna dodawać nowy rekord jezeli go nie ma lub zapisywać zmiany w istniejącym rekordzie.
+	-dodaj deleteRecordFromDatabase
+
+	
+3) Dodaj unikalny identifykator rekordu	
+	żeby łatwo identyfikować który rekord chcesz usunąć lub edytować dobrze byłoby dodać jakiś unikalny identyfikator rekordu
+		-w momencie kliknięcia "Edit" lub "Delete" przekazujesz tylko identyfikator rekordu do funkcji (np. deleteRecordFromDb(recordID), editRecord(recordID)) która robi co trzeba
+		-takim unikalnym identyfikatorem może być w naszym przypadku nr telefonu ale nie jest to dobre rozwiązanie bo jeżeli ktoś początkowo dodał nr +4812345678 a potem podczas edycji zamienił go na +48 12345678 to mamy kłopot ponieważ zrobią się duplikaty
+		-identyfikatorem mogłby być też indeks tablicy która przechowuje rekordy ale to też jest śliskie (co się stanie jak usuniemy rekord w środku tablicy?)
+		-najlepiej byłoby dodać jakiś "sztuczny" ID (np. inkrementowany numer) i dodanie go do rekordu 
+		 var record = {
+			"uniqueID" : [tutaj musisz wygenerowac unikalny ID]
+			.....
+		  }
+	  
+
+			  
+4) Teraz tablicę (bazę danych) inicjalizujesz za każdym razem jak dodaje się nowy rekord. 
+			function pushToArray(record) {
+			  var arr = [];			<-- tutaj inicjalizacja
+			  arr.push(record);
+			  console.log(arr);
+			  console.log(arr[0]);
+			  displayList(arr);
+			}
+			<-- ale poza funkcją pushToArray() zmienna 'arr' jest niewidoczna już
+			
+			
+			Przez to nie masz referencji do zmiennej 'arr'! Pomyśl jak będziesz usuwać rekord z bazy jak nie masz nigdzie referencji do niej?
+
+			
+			
+5) Zamień tablicę na inną strukturę do przechowywania rekordów			
+	Tablica do przechowywania rekordów jest OK ale są gotowe struktury które mogą być lepsze do tego typu rzeczy.
+	
+	Hint: Poczytaj jakie są różnice pomiędzy Array, Map, Set. Wybierz która lepsza w tym przypadku
+		http://javascript.info/map-set-weakmap-weakset
+		http://2ality.com/2015/01/es6-maps-sets.html
+		
+		

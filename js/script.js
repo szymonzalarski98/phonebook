@@ -1,68 +1,136 @@
 var recordID = 0;
+var map = new Map();
 
+//****************form and logic related functions (Controller - letter C in MVC)
 function onFormSubmit() {
-  recordID++;
+  var record = collectFormData();
+  if (!validateRecord(record))
+    return;
+  assignUniqueRecordID(record);
+  saveRecordToDatabase(record);
+  refreshView();
+}
+
+function collectFormData() {
   var phoneInputValue = document.querySelector('#phoneNumber').value;
+  var emailInputValue = document.querySelector('#email').value;
   var nameInputValue = document.querySelector('#name').value;
   var lastNameInputValue = document.querySelector('#lastName').value;
   var record = {
     "phone": phoneInputValue,
+    "email": emailInputValue,
     "name": nameInputValue,
     "lastName": lastNameInputValue,
-    "uniqueID": recordID
   }
-  saveRecordToDatabase(record, recordID);
-}
-// var arr = [];
-var map = new Map();
-
-function saveRecordToDatabase(record, recordID) {
-  // arr.push(record);
-  // displayList(arr);
-  map.set(recordID, record);
-  //ponizej przyklad wyciagniecia danych, tak zebym nie zapomnial :)
-  displayList(map, record , recordID);
-
+  return record;
 }
 
-function deleteRecordFromDatabase() {
-  renderList(recordID);
+function validateRecord(record) {
+  var phoneRegex = /^\+?([0-9]{2})\)?(\s)?[-. ]?([0-9]{8,9})$/;
+  var emailRegex = /\S+@\S+\.\S+/;
+  var personRegex = /^[a-zA-Z ]{3,20}$/;
+  var phoneValue = record.phone;
+  var emailValue = record.email;
+  var nameValue = record.name;
+  var lastNameValue = record.lastName;
+  if (phoneValue.match(phoneRegex) &&
+    emailValue.match(emailRegex) &&
+    nameValue.match(personRegex) &&
+    lastNameValue.match(personRegex)
+  ) {
+    return true;
+  } else {
+    alert("Please fill out the form correctly!");
+    return false;
+  }
 }
 
-function editRecordFromDatabase() {
+////****************database related functions (Model - letter M in MVC)
+
+function assignUniqueRecordID(record) {
+  record.uniqueID = recordID++;
+}
+
+function saveRecordToDatabase(record) {
+  map.set(record.uniqueID, record);
+  //displayList(map, record , recordID);	tą funkcje lepiej wywołać z controllera
+}
+
+function deleteRecordFromDatabase(uniqueID) {
+  map.delete(uniqueID);
+  refreshView();
+}
+
+function editRecordFromDatabase(db, uniqueID) {
+  var record = map.get(db);
+  showModal(true);
+  var saveChangesButton = document.querySelector('#saveChanges');
+  saveChangesButton.onclick = function () {
+    var editPhoneNumber = document.querySelector('#editPhoneNumber').value;
+    var editEmail = document.querySelector('#editEmail').value;
+    var editName = document.querySelector('#editName').value;
+    var editLastName = document.querySelector('#editLastName').value;
+    record.phone = editPhoneNumber;
+    record.email = editEmail;
+    record.name = editName;
+    record.lastName = editLastName;
+    map.set(db, record);
+    refreshView();
+  }
 }
 
 var list = document.querySelector('.contacts__column');
 
-function displayList(map, record, recordID) {
+
+
+////**************** display related functions (View - letter V in MVC)
+function refreshView() {
+  clearList();
+  renderList(map)
+}
+
+function clearList() {
+  list.innerHTML = '';
+}
+
+function renderList(db) {
+  clearList();
+  // iterate over keys (records)
+  for (let key of db.keys()) {
+    renderRecord(db.get(key));
+  }
+}
+
+function showModal(show) {
+  var editModal = document.querySelector('.modal__container');
+  if (show = true) {
+    editModal.style.display = "block";
+  } else {
+    editModal.style.display = "none";
+  }
+}
+
+function renderRecord(record) {
   var row = document.createElement('li');
   var editButton = document.createElement('button');
   editButton.classList.add("contacts__button--edit");
-  editButton.textContent = "Edit";
+  editButton.innerHTML = "Edit";
+  editButton.onclick = function () {
+    editRecordFromDatabase(record.uniqueID);
+  }
   var deleteButton = document.createElement('button');
   deleteButton.classList.add("contacts__button--delete");
   deleteButton.textContent = "Delete";
-  deleteButton.onclick = function() {
-    //ta funkcja usuwa wybrany element
-    list.removeChild(list.childNodes[map.get(recordID)["uniqueID"]]);
-    // deleteRecordFromDatabase();
+  deleteButton.onclick = function () {
+    deleteRecordFromDatabase(record.uniqueID); //usun rekord
+    refreshView(); //odswiez widok
   };
-  row.textContent = "Phone: " + map.get(recordID)["phone"] + "  " +
-  "Name: " + map.get(recordID)["name"] + "  " +
-  "Lastname: " + map.get(recordID)["lastName"] + "  " +
-  "ID: " + map.get(recordID)["uniqueID"];
+  row.textContent = "Phone: " + record.phone + "  " +
+    "Email: " + record.email + " " +
+    "Name: " + record.name + "  " +
+    "Lastname: " + record.lastName + "  " +
+    "ID: " + record.uniqueID;
   row.appendChild(editButton);
   row.appendChild(deleteButton);
-    list.appendChild(row);
-  }
-var i;
-function renderList() {
-  // recordID = 0;
-  for(i = 0 ;i < recordID; i++) {
-    // var createLi = document.createElement('li');
-    // createLi.textContent = "Hello";
-    // list.appendChild(createLi);
-  }
+  list.appendChild(row);
 }
-  // display = document.querySelector('.contacts__container');
-  // display.innerHTML = tab[0]["phone"] + tab[0]["name"] + tab[0]["lastName"];
